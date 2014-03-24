@@ -1,7 +1,6 @@
 package com.candidature.entities;
 
 import java.io.Serializable;
-import java.lang.Long;
 import java.lang.String;
 
 import javax.persistence.*;
@@ -36,8 +35,20 @@ public class Candidat implements Serializable {
 	@Column(name = "SITUATION_PRO", nullable = false)
 	private String situationPro;
 	
-	@Column(name = "PASSWORD", nullable = false)
+	@Column(nullable = false)
 	private String password;
+	
+	@Column(nullable = false)
+	private String motivation;
+	
+	@Column(nullable = false)
+	private String adresse;
+	
+	@Column(nullable = false)
+	private int codePostal;
+	
+	@Column(nullable = false)
+	private String ville;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -113,5 +124,37 @@ public class Candidat implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getMotivation() {
+		return this.motivation;
+	}
+
+	public void setMotivation(String motivation) {
+		this.motivation = motivation;
+	}
+	
+	public String getAdresse() {
+		return this.adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+	
+	public int getCodePostal() {
+		return this.codePostal;
+	}
+
+	public void setCodePostal(int codePostal) {
+		this.codePostal = codePostal;
+	}	
+	
+	public String getVille() {
+		return this.ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
 	}
 }
