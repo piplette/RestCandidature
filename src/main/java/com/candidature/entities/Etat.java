@@ -2,6 +2,8 @@ package com.candidature.entities;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.*;
 
@@ -16,12 +18,14 @@ public class Etat implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ETAT_ID")
 	private int id;
+	
 	@Column(nullable = false)
 	private String nom;
+	
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne(mappedBy="etat") 
-	private Candidature candidature;
+	@OneToMany(mappedBy="etat") 
+	private Collection<Candidature> candidatures = new ArrayList<Candidature>();
 	
 	public Etat() {
 		super();
@@ -41,10 +45,11 @@ public class Etat implements Serializable {
 		this.nom = nom;
 	}
 	
-	public Candidature getCandidature() {
-		return candidature;
+	public Collection<Candidature> getCandidatures() {
+		return candidatures;
 	}
-	public void setCandidature(Candidature candidature) {
-		this.candidature = candidature;
+	
+	public void setCandidatures(Collection<Candidature> candidatures) {
+		this.candidatures = candidatures;
 	}
 }

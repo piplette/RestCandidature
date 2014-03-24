@@ -90,7 +90,7 @@ public class CandidatController {
 		candidats.add(candidat);
 //		System.out.println("Personne.nom=" + candidat.getNomCandidat());
 		} catch (EntityNotFoundException e) {
-		System.out.println("Personnghuge non trouvée");
+		System.out.println("Personne non trouvée");
 		}
 		entityManager.close();
 		emf.close();

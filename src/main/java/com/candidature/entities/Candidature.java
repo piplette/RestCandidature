@@ -16,14 +16,16 @@ public class Candidature implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CANDIDATURE_ID")
 	private int id;
+	
 	@Column(name = "DATE_INSCRIPTION", nullable = false)
 	private Date dateInscription;
+	
 	private static final long serialVersionUID = 1L;
 	
-	@OneToOne
+	@ManyToOne
 	private Session session;
 	
-	@OneToOne
+	@ManyToOne
 	private Etat etat;
 	
 	@OneToOne

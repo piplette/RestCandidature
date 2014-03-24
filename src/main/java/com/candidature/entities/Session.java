@@ -3,6 +3,8 @@ package com.candidature.entities;
 import java.io.Serializable;
 import java.lang.String;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.*;
 
@@ -17,29 +19,36 @@ public class Session implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "SESSION_ID")
 	private int id;
+	
 	@Column(nullable = false)
 	private String nom;
+	
 	@Column(name = "DATE_DEBUT", nullable = false)
 	private Date dateDebut;
+	
 	@Column(name = "DATE_FIN", nullable = false)
 	private Date dateFin;
+	
 	@Column(name = "PERIODE_SESSION", nullable = false)
 	private Date periodeSession;
+	
 	private static final long serialVersionUID = 1L;
 
-	@OneToOne(mappedBy="session") 
-	private Candidature candidature;
+	@OneToMany(mappedBy="session") 
+	private Collection<Candidature> candidatures = new ArrayList<Candidature>();
 	
 	public Session() {
 		super();
-	}   
+	}  
+	
 	public int getId() {
 		return this.id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}   
+	}
+	
 	public String getNom() {
 		return this.nom;
 	}
@@ -47,6 +56,7 @@ public class Session implements Serializable {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}   
+	
 	public Date getDateDebut() {
 		return this.dateDebut;
 	}
@@ -61,6 +71,7 @@ public class Session implements Serializable {
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
 	}   
+	
 	public Date getPeriodeSession() {
 		return this.periodeSession;
 	}
@@ -68,12 +79,12 @@ public class Session implements Serializable {
 	public void setPeriodeSession(Date periodeSession) {
 		this.periodeSession = periodeSession;
 	}
-	
-	public Candidature getCandidature() {
-		return candidature;
+
+	public Collection<Candidature> getCandidatures() {
+		return candidatures;
 	}
 	
-	public void setCandidature(Candidature candidature) {
-		this.candidature = candidature;
+	public void setCandidatures(Collection<Candidature> candidatures) {
+		this.candidatures = candidatures;
 	}
 }

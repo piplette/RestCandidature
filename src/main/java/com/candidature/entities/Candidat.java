@@ -17,18 +17,28 @@ public class Candidat implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CANDIDAT_ID")
 	private int id;
+	
 	@Column(nullable = false)
 	private String nom;
+	
 	@Column(nullable = false)
 	private String prenom;
+	
 	@Column(nullable = false, unique = true)
 	private String telephone;
+	
 	@Column(nullable = false, unique = true)
 	private String email;
+	
 	@Column(nullable = false)
 	private String diplome;
+	
 	@Column(name = "SITUATION_PRO", nullable = false)
 	private String situationPro;
+	
+	@Column(name = "PASSWORD", nullable = false)
+	private String password;
+	
 	private static final long serialVersionUID = 1L;
 	
 	@OneToOne(mappedBy="candidat") 
@@ -71,14 +81,16 @@ public class Candidat implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}   
+	}
+	
 	public String getDiplome() {
 		return this.diplome;
 	}
 
 	public void setDiplome(String diplome) {
 		this.diplome = diplome;
-	}   
+	}
+	
 	public String getSituationPro() {
 		return this.situationPro;
 	}
@@ -90,7 +102,16 @@ public class Candidat implements Serializable {
 	public Candidature getCandidature() {
 		return candidature;
 	}
+	
 	public void setCandidature(Candidature candidature) {
 		this.candidature = candidature;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
