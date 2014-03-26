@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Session implements Serializable {
 	   
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "SESSION_ID")
 	private int id;
 	

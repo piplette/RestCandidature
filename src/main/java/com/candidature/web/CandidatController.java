@@ -1,12 +1,17 @@
 package com.candidature.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,83 +29,78 @@ import com.candidature.entities.*;
 @RequestMapping("/candidat")
 public class CandidatController {
 
-//	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//	@ResponseBody
-//	public Candidat get(@PathVariable("id") int candidatId){
-//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("manager1");
-//		EntityManager entityManager = emf.createEntityManager();
-//		Candidat candidat = null;
-////		EntityTransaction tx = entityManager.getTransaction();
-////		tx.begin();
-////		Candidat candidat = new Candidat();
-////		candidat.setPrenomCandidat("Romain");
-////		candidat.setNomCandidat("Parinaud");
-////		Long tel = (long) 014631313;
-////		candidat.setTelCandidat(tel);
-////		candidat.setEmailCandidat("romparinaud@hotmail.com");
-////		candidat.setDiplomeCandidat("nuuu");
-////		entityManager.persist(candidat);
-////		tx.commit();
-//			
-//		try {
-//			candidat = entityManager.find(Candidat.class, candidatId);
-////			System.out.println("Personne.nom=" + candidat.getNomCandidat());
-//			} catch (EntityNotFoundException e) {
-//			System.out.println("personne non trouvée");
-//			}
-//			entityManager.close();
-//			emf.close();
-//			
-//			return candidat;
-//	}
-	
-//	@RequestMapping(method = RequestMethod.GET)
-//	@ResponseBody
-//	@ResponseStatus(HttpStatus.OK)
-//	public List<Message> getMessageSujet(@RequestParam(value="sujet", required = false) String sujet){
-//		List<Message> messages = new ArrayList<Message>();
-//		messages.add(new Message("Bonjour", "Tintin", "Affaire Tournesol"));
-//		messages.add(new Message("Adieu", "Hadock", "Affaire Tournesol"));
-//
-//		return messages;
-//	}
+	private EntityManagerFactory emf;
+	private EntityManager em;
 
+	private void open() {
+		emf = Persistence.createEntityManagerFactory("manager");
+		em = emf.createEntityManager();
+	}
+
+	private void close() {
+		em.close();
+		emf.close();
+	}
+
+	/*****************************************/
+	/***** RECHERCHER UN CANDIDATS PAR ID*****/
+	/*****************************************/
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Candidat findCandidatById(@PathVariable("id") int candidatId) {
+		open();
+		Candidat candidat = null;
+		try {
+			candidat = em.find(Candidat.class, candidatId);
+		} catch (EntityNotFoundException e) {
+			System.out.println("personne non trouvée");
+		}finally{
+			close();
+		}
+		return candidat;
+	}
+
+	/*****************************************/
+	/***** RECHERCHER TOUS LES CANDIDATS *****/
+	/*****************************************/
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public List<Candidat> getMessageSujet(@RequestParam(value="sujet", required = false) String sujet){	
-		List<Candidat> candidats = new ArrayList<Candidat>();
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("manager");
-	EntityManager entityManager = emf.createEntityManager();
-	
-//	EntityTransaction tx = entityManager.getTransaction();
-//	tx.begin();
-//	Candidat candidat = new Candidat();
-//	candidat.setPrenomCandidat("Romain");
-//	candidat.setNomCandidat("Parinaud");
-//	Long tel = (long) 014631313;
-//	candidat.setTelCandidat(tel);
-//	candidat.setEmailCandidat("romparinaud@hotmail.com");
-//	candidat.setDiplomeCandidat("nuuu");
-//	entityManager.persist(candidat);
-//	tx.commit();
-		
-	try {
-		Candidat candidat = entityManager.find(Candidat.class, 1);
-		candidats.add(candidat);
-//		System.out.println("Personne.nom=" + candidat.getNomCandidat());
+	public List<Candidat> findAllCandidat(
+			@RequestParam(value = "sujet", required = false) String sujet) {
+		open();
+		Query query = null;
+		try {
+			query = em.createQuery("select c from Candidat c");
 		} catch (EntityNotFoundException e) {
-		System.out.println("Personne non trouvée");
+			System.out.println("erreur");
+		}finally{
+			close();
 		}
-		entityManager.close();
-		emf.close();
+		List<Candidat> candidats = query.getResultList();
+		Iterator<Candidat> it = candidats.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next().toString());
+		}
 		
-		return candidats;
-	}	
-	
-//	@RequestMapping(method = RequestMethod.POST)
-//	@ResponseStatus(HttpStatus.OK)
-//	public void postMessage(@RequestBody Message message){
-//		System.out.println(message);
-//	}
+	    return candidats;
+	}
+	/****************************************/
+	/***** ENREGISTREMENT D'UN CANDIDAT *****/
+	/****************************************/
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.OK)
+	public void postMessage(@RequestBody Candidat candidat) {
+		open();
+		try{
+			EntityTransaction tx = em.getTransaction();
+			tx.begin();
+			em.persist(candidat);
+			tx.commit();
+		}catch(EntityExistsException e){
+			e.printStackTrace();
+		}finally{
+			close();	
+		}
+	}
 }

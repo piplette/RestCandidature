@@ -34,10 +34,15 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 <bean id="siteController" class="com.candidature.web.CandidatController">
 </bean>
 
-
-
-
-
+<!-- Rest Template -->  
+ <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+ 	<property name="messageConverters">
+	<list>
+	<ref bean="jsonConverter" />
+	</list>
+</property>
+ </bean>  
+ 
 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
    <property name="messageConverters">
        <list>
@@ -53,3 +58,7 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 
 </beans>
+
+
+
+

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Etat implements Serializable {
 	   
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ETAT_ID")
 	private int id;
 	

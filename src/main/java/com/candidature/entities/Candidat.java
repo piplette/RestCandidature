@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Candidat implements Serializable {
 	   
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CANDIDAT_ID")
 	private int id;
 	
@@ -44,7 +44,7 @@ public class Candidat implements Serializable {
 	@Column(nullable = false)
 	private String adresse;
 	
-	@Column(nullable = false)
+	@Column(name = "CODE_POSTAL", nullable = false)
 	private int codePostal;
 	
 	@Column(nullable = false)
@@ -156,5 +156,14 @@ public class Candidat implements Serializable {
 
 	public void setVille(String ville) {
 		this.ville = ville;
+	}
+	
+	public String toString() {
+		return "Candidat [id=" + id + ", nom=" + nom + ", prenom=" + prenom
+				+ ", telephone=" + telephone + ", email=" + email
+				+ ", diplome=" + diplome + ", situationPro=" + situationPro
+				+ ", password=" + password + ", motivation=" + motivation
+				+ ", adresse=" + adresse + ", codePostal=" + codePostal
+				+ ", ville=" + ville + ", candidature=" + candidature + "]";
 	}
 }

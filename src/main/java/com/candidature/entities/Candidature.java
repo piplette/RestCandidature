@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Candidature implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "CANDIDATURE_ID")
 	private int id;
 	
