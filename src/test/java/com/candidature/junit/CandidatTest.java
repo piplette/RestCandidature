@@ -20,17 +20,17 @@ public class CandidatTest {
 		
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-    	String mot = "fdvfdssfds";
+    	String mot = "fdvsfds";
     	
     	Candidat candidat = new Candidat();
-    	candidat.setAdresse(mot);
-    	candidat.setCodePostal(78778);
+    	candidat.setAdresse("4, avenue gabriel peri");
+    	candidat.setCodePostal(92350);
     	candidat.setDiplome(mot);
-    	candidat.setEmail(mot);
+    	candidat.setEmail("kentish@hotmail.com");
     	candidat.setMotivation(mot);
     	candidat.setNom(mot);
     	candidat.setPassword(mot);
-    	candidat.setPrenom(mot);
+    	candidat.setPrenom("kentish");
     	candidat.setSituationPro(mot);
     	candidat.setTelephone(mot);
     	candidat.setVille(mot);

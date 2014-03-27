@@ -70,17 +70,18 @@ public class CandidatController {
 			@RequestParam(value = "sujet", required = false) String sujet) {
 		open();
 		Query query = null;
+		List<Candidat> candidats = null;
 		try {
 			query = em.createQuery("select c from Candidat c");
+			candidats = query.getResultList();
+			Iterator<Candidat> it = candidats.iterator();
+			while(it.hasNext()){
+				System.out.println(it.next().toString());
+			}
 		} catch (EntityNotFoundException e) {
 			System.out.println("erreur");
 		}finally{
 			close();
-		}
-		List<Candidat> candidats = query.getResultList();
-		Iterator<Candidat> it = candidats.iterator();
-		while(it.hasNext()){
-			System.out.println(it.next().toString());
 		}
 		
 	    return candidats;
