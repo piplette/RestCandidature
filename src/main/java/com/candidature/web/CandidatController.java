@@ -1,5 +1,6 @@
 package com.candidature.web;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -12,8 +13,12 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.RollbackException;
 
+import org.eclipse.persistence.exceptions.TransactionException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,9 +48,9 @@ public class CandidatController {
 	}
 
 	/*****************************************/
-	/***** RECHERCHER UN CANDIDATS PAR ID*****/
+	/***** RECHERCHER UN CANDIDATS PAR ID *****/
 	/*****************************************/
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, consumes = "application/json")
 	@ResponseBody
 	public Candidat findCandidatById(@PathVariable("id") int candidatId) {
 		open();
@@ -54,7 +59,7 @@ public class CandidatController {
 			candidat = em.find(Candidat.class, candidatId);
 		} catch (EntityNotFoundException e) {
 			System.out.println("personne non trouvée");
-		}finally{
+		} finally {
 			close();
 		}
 		return candidat;
@@ -63,9 +68,8 @@ public class CandidatController {
 	/*****************************************/
 	/***** RECHERCHER TOUS LES CANDIDATS *****/
 	/*****************************************/
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, consumes = "application/json")
 	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
 	public List<Candidat> findAllCandidat(
 			@RequestParam(value = "sujet", required = false) String sujet) {
 		open();
@@ -75,33 +79,46 @@ public class CandidatController {
 			query = em.createQuery("select c from Candidat c");
 			candidats = query.getResultList();
 			Iterator<Candidat> it = candidats.iterator();
-			while(it.hasNext()){
+			while (it.hasNext()) {
 				System.out.println(it.next().toString());
 			}
 		} catch (EntityNotFoundException e) {
 			System.out.println("erreur");
-		}finally{
+		} finally {
 			close();
 		}
-		
-	    return candidats;
+
+		return candidats;
 	}
+
 	/****************************************/
 	/***** ENREGISTREMENT D'UN CANDIDAT *****/
 	/****************************************/
-	@RequestMapping(method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	public void postMessage(@RequestBody Candidat candidat) {
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<Object> postMessage(@RequestBody Candidat candidat) {
 		open();
-		try{
+		if (candidat.getAdresse() == null) { return new ResponseEntity<Object>("adresse vide", HttpStatus.BAD_REQUEST);} 
+		if (candidat.getCodePostal() == null) { return new ResponseEntity<Object>("cp vide", HttpStatus.BAD_REQUEST);} 
+		if (candidat.getDiplome() == null) { return new ResponseEntity<Object>("diplome vide", HttpStatus.BAD_REQUEST);} 
+		if (candidat.getEmail() == null) { return new ResponseEntity<Object>("email vide", HttpStatus.BAD_REQUEST);}
+		if (candidat.getNom() == null) { return new ResponseEntity<Object>("nom vide", HttpStatus.BAD_REQUEST);}
+		if (candidat.getPassword() == null) { return new ResponseEntity<Object>("password vide", HttpStatus.BAD_REQUEST);}
+		if (candidat.getPrenom() == null) { return new ResponseEntity<Object>("prenom vide", HttpStatus.BAD_REQUEST); } 
+		if (candidat.getSituationFamiliale() == null) { return new ResponseEntity<Object>("sitFam vide", HttpStatus.BAD_REQUEST);}
+		if (candidat.getTelephone() == null) { return new ResponseEntity<Object>("telephone vide", HttpStatus.BAD_REQUEST);}
+		if (candidat.getVille() == null) { return new ResponseEntity<Object>("ville vide", HttpStatus.BAD_REQUEST);}
+		try {
 			EntityTransaction tx = em.getTransaction();
 			tx.begin();
 			em.persist(candidat);
 			tx.commit();
-		}catch(EntityExistsException e){
-			e.printStackTrace();
-		}finally{
-			close();	
+		} catch (RollbackException te) {
+			close();
+			return new ResponseEntity<Object>("Doublon", HttpStatus.CONFLICT);
 		}
+		close();
+		return new ResponseEntity<Object>("OK", HttpStatus.CREATED);
+
 	}
+
 }

@@ -20,6 +20,9 @@ public class Candidature implements Serializable {
 	@Column(name = "DATE_INSCRIPTION", nullable = false)
 	private Date dateInscription;
 	
+	@Column(nullable = false)
+	private String motivation;
+	
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
@@ -33,14 +36,16 @@ public class Candidature implements Serializable {
 	
 	public Candidature() {
 		super();
-	}   
+	}  
+	
 	public int getId() {
 		return this.id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}   
+	}
+	
 	public Date getDateInscription() {
 		return this.dateInscription;
 	}
@@ -52,19 +57,32 @@ public class Candidature implements Serializable {
 	public Session getSession() {
 		return session;
 	}
+	
 	public void setSession(Session session) {
 		this.session = session;
 	}
+	
 	public Etat getEtat() {
 		return etat;
 	}
+	
 	public void setEtat(Etat etat) {
 		this.etat = etat;
 	}
+	
 	public Candidat getCandidat() {
 		return candidat;
 	}
+	
 	public void setCandidat(Candidat candidat) {
 		this.candidat = candidat;
-	} 
+	}
+	
+	public String getMotivation() {
+		return this.motivation;
+	}
+
+	public void setMotivation(String motivation) {
+		this.motivation = motivation;
+	}
 }

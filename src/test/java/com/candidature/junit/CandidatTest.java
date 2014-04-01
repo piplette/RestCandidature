@@ -5,6 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -24,27 +25,36 @@ public class CandidatTest {
     	
     	Candidat candidat = new Candidat();
     	candidat.setAdresse("4, avenue gabriel peri");
-    	candidat.setCodePostal(92350);
+    	candidat.setCodePostal("92350");
     	candidat.setDiplome(mot);
     	candidat.setEmail("kentish@hotmail.com");
-    	candidat.setMotivation(mot);
     	candidat.setNom(mot);
     	candidat.setPassword(mot);
     	candidat.setPrenom("kentish");
     	candidat.setSituationPro(mot);
     	candidat.setTelephone(mot);
-    	candidat.setVille(mot);
+//    	candidat.setVille(mot);
     	
     	
 		HttpEntity<Candidat> entity = new HttpEntity<Candidat>(candidat,headers);
-		String href = "http://localhost:8080/RestCandidature/candidat";
 		
-		restTemplate.exchange(href, HttpMethod.POST, entity, Candidat.class);
-		
-		
-		
-//		ResponseEntity<Candidat> response = restTemplate.exchange(href, HttpMethod.GET, entity, Candidat.class);
+		String url = "http://localhost:8080/RestCandidature/candidat";
+		System.out.println("111111111111111111111111111");
+//		ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.POST, entity, Object.class);
+//		ResponseEntity<Object> response2 = restTemplate.postForEntity(url, entity, Object.class);
+//		System.out.println("iziiiiiiiiii");
+//		System.out.println(response2.getBody());
+//		restTemplate.getForObject(url, responseType, urlVariables)
+//		ResponseEntity<Candidat> response = restTemplate.exchange(url, HttpMethod.GET, entity, Candidat.class);
 //		Candidat candidat = response.getBody();
 //		System.out.println(candidat.toString());
+		//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+		ResponseEntity<Object> response = restTemplate.postForEntity(url, entity, Object.class);
+		System.out.println("ya eu le retour");
+		HttpStatus status = response.getStatusCode();
+//		String restCall = response.getBody();
+		System.out.println(status);
+		
+		
     }
 }

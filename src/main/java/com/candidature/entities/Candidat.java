@@ -32,20 +32,17 @@ public class Candidat implements Serializable {
 	@Column(nullable = false)
 	private String diplome;
 	
-	@Column(name = "SITUATION_PRO", nullable = false)
-	private String situationPro;
+	@Column(name = "SITUATION_FAMILIALE", nullable = false)
+	private String situationFamiliale;
 	
 	@Column(nullable = false)
 	private String password;
 	
 	@Column(nullable = false)
-	private String motivation;
-	
-	@Column(nullable = false)
 	private String adresse;
 	
-	@Column(name = "CODE_POSTAL", nullable = false)
-	private int codePostal;
+	@Column(name = "CODE_POSTAL", length = 5, nullable = false)
+	private String codePostal;
 	
 	@Column(nullable = false)
 	private String ville;
@@ -57,7 +54,8 @@ public class Candidat implements Serializable {
 
 	public Candidat() {
 		super();
-	}   
+	}
+	
 	public int getId() {
 		return this.id;
 	}
@@ -65,13 +63,15 @@ public class Candidat implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}   
+	
 	public String getNom() {
 		return this.nom;
 	}
 
 	public void setNom(String nom) {
 		this.nom = nom;
-	}   
+	}  
+	
 	public String getPrenom() {
 		return this.prenom;
 	}
@@ -86,6 +86,7 @@ public class Candidat implements Serializable {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}   
+	
 	public String getEmail() {
 		return this.email;
 	}
@@ -102,12 +103,12 @@ public class Candidat implements Serializable {
 		this.diplome = diplome;
 	}
 	
-	public String getSituationPro() {
-		return this.situationPro;
+	public String getSituationFamiliale() {
+		return this.situationFamiliale;
 	}
 
-	public void setSituationPro(String situationPro) {
-		this.situationPro = situationPro;
+	public void setSituationPro(String situationFamiliale) {
+		this.situationFamiliale = situationFamiliale;
 	}
 	
 	public Candidature getCandidature() {
@@ -126,14 +127,6 @@ public class Candidat implements Serializable {
 		this.password = password;
 	}
 	
-	public String getMotivation() {
-		return this.motivation;
-	}
-
-	public void setMotivation(String motivation) {
-		this.motivation = motivation;
-	}
-	
 	public String getAdresse() {
 		return this.adresse;
 	}
@@ -142,11 +135,11 @@ public class Candidat implements Serializable {
 		this.adresse = adresse;
 	}
 	
-	public int getCodePostal() {
+	public String getCodePostal() {
 		return this.codePostal;
 	}
 
-	public void setCodePostal(int codePostal) {
+	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
 	}	
 	
@@ -161,8 +154,8 @@ public class Candidat implements Serializable {
 	public String toString() {
 		return "Candidat [id=" + id + ", nom=" + nom + ", prenom=" + prenom
 				+ ", telephone=" + telephone + ", email=" + email
-				+ ", diplome=" + diplome + ", situationPro=" + situationPro
-				+ ", password=" + password + ", motivation=" + motivation
+				+ ", diplome=" + diplome + ", situationFamiliale=" + situationFamiliale
+				+ ", password=" + password 
 				+ ", adresse=" + adresse + ", codePostal=" + codePostal
 				+ ", ville=" + ville + ", candidature=" + candidature + "]";
 	}
