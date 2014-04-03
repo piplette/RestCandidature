@@ -68,7 +68,7 @@ public class CandidatController {
 	/*****************************************/
 	/***** RECHERCHER TOUS LES CANDIDATS *****/
 	/*****************************************/
-	@RequestMapping(method = RequestMethod.GET, consumes = "application/json")
+	@RequestMapping(value = "/candidats", method = RequestMethod.GET, consumes = "application/json")
 	@ResponseBody
 	public List<Candidat> findAllCandidat(
 			@RequestParam(value = "sujet", required = false) String sujet) {
@@ -87,7 +87,6 @@ public class CandidatController {
 		} finally {
 			close();
 		}
-
 		return candidats;
 	}
 
@@ -118,7 +117,5 @@ public class CandidatController {
 		}
 		close();
 		return new ResponseEntity<Object>("OK", HttpStatus.CREATED);
-
 	}
-
 }

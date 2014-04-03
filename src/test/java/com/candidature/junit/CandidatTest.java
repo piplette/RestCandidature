@@ -33,7 +33,7 @@ public class CandidatTest {
     	candidat.setPrenom("kentish");
     	candidat.setSituationPro(mot);
     	candidat.setTelephone(mot);
-//    	candidat.setVille(mot);
+    	candidat.setVille(mot);
     	
     	
 		HttpEntity<Candidat> entity = new HttpEntity<Candidat>(candidat,headers);
