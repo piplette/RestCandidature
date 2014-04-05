@@ -107,7 +107,7 @@ public class Candidat implements Serializable {
 		return this.situationFamiliale;
 	}
 
-	public void setSituationPro(String situationFamiliale) {
+	public void setSituationFamiliale(String situationFamiliale) {
 		this.situationFamiliale = situationFamiliale;
 	}
 	

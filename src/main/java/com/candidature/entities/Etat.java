@@ -19,7 +19,7 @@ public class Etat implements Serializable {
 	@Column(name = "ETAT_ID")
 	private int id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String nom;
 	
 	private static final long serialVersionUID = 1L;

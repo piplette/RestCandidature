@@ -31,7 +31,7 @@ public class CandidatTest {
     	candidat.setNom(mot);
     	candidat.setPassword(mot);
     	candidat.setPrenom("kentish");
-    	candidat.setSituationPro(mot);
+    	candidat.setSituationFamiliale(mot);
     	candidat.setTelephone(mot);
     	candidat.setVille(mot);
     	

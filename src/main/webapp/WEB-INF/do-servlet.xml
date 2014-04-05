@@ -31,7 +31,13 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
  -->
 
 
-<bean id="siteController" class="com.candidature.web.CandidatController">
+<bean id="candidatController" class="com.candidature.web.CandidatController">
+</bean>
+<bean id="sessionController" class="com.candidature.web.SessionController">
+</bean>
+<bean id="etatController" class="com.candidature.web.EtatController">
+</bean>
+<bean id="canditureController" class="com.candidature.web.CandidatureController">
 </bean>
 
 <!-- Rest Template -->  
