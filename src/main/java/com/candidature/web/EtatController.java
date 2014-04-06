@@ -48,7 +48,7 @@ public class EtatController {
 		if(etatId <= 0){close();return new ResponseEntity<Object>("PAS ID", HttpStatus.BAD_REQUEST);}
 		Etat etat = em.find(Etat.class, etatId);
 		close();
-		if(etat == null){return new ResponseEntity<Object>("NOT FOUND", HttpStatus.NOT_FOUND);}
+		if(etat == null){return new ResponseEntity<Object>("ETAT ABSENT", HttpStatus.NOT_FOUND);}
 		return new ResponseEntity<Object>(etat, HttpStatus.OK);
 	}
 
@@ -62,7 +62,7 @@ public class EtatController {
 		Query query = em.createQuery("select c from Etat c");
 		List<Etat> etats = query.getResultList();
 		close();
-		if(etats.size() == 0){return new ResponseEntity<Object>("NOT FOUND", HttpStatus.NOT_FOUND);}
+		if(etats.size() == 0){return new ResponseEntity<Object>("TABLE VIDE", HttpStatus.NOT_FOUND);}
 		return new ResponseEntity<Object>(etats, HttpStatus.OK);
 	}
 
@@ -83,7 +83,7 @@ public class EtatController {
 			return new ResponseEntity<Object>("Doublon", HttpStatus.CONFLICT);
 		}
 		close();
-		return new ResponseEntity<Object>("OK", HttpStatus.CREATED);
+		return new ResponseEntity<Object>("ETAT CREE", HttpStatus.CREATED);
 	}
 	
 	/****************************************/

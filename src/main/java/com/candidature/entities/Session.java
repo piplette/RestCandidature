@@ -4,16 +4,18 @@ import java.io.Serializable;
 import java.lang.String;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * Entity implementation class for Entity: Session
  *
  */
 @Entity
-public class Session implements Serializable {
+public class Session implements Serializable{
 	   
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +36,8 @@ public class Session implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(mappedBy="session") 
-	private Collection<Candidature> candidatures = new ArrayList<Candidature>();
+	@OneToMany(mappedBy="session") 	
+	private List<Candidature> candidatures = new ArrayList<Candidature>();
 	
 	public Session() {
 		super();
@@ -80,11 +82,12 @@ public class Session implements Serializable {
 		this.periodeSession = periodeSession;
 	}
 
-	public Collection<Candidature> getCandidatures() {
+	@JsonIgnore
+	public List<Candidature> getCandidatures() {
 		return candidatures;
 	}
 	
-	public void setCandidatures(Collection<Candidature> candidatures) {
+	public void setCandidatures(List<Candidature> candidatures) {
 		this.candidatures = candidatures;
 	}
 }

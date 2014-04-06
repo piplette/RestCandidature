@@ -5,12 +5,15 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+
 /**
  * Entity implementation class for Entity: Candidature
  *
  */
 @Entity
-public class Candidature implements Serializable {
+public class Candidature implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +28,7 @@ public class Candidature implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@ManyToOne
+	@ManyToOne	
 	private Session session;
 	
 	@ManyToOne
@@ -54,6 +57,7 @@ public class Candidature implements Serializable {
 		this.dateInscription = dateInscription;
 	}	
 
+	@JsonIgnore
 	public Session getSession() {
 		return session;
 	}
@@ -62,6 +66,7 @@ public class Candidature implements Serializable {
 		this.session = session;
 	}
 	
+	@JsonIgnore
 	public Etat getEtat() {
 		return etat;
 	}
@@ -70,7 +75,12 @@ public class Candidature implements Serializable {
 		this.etat = etat;
 	}
 	
+	@JsonIgnore
 	public Candidat getCandidat() {
+		return candidat;
+	}
+	
+	public Candidat getCandidatCandidature() {
 		return candidat;
 	}
 	

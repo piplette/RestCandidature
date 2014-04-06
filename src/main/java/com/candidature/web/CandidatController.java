@@ -20,9 +20,11 @@ import javax.persistence.Query;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,7 +84,7 @@ public class CandidatController {
 	/*****************************************/
 	/***** RECHERCHER UN CANDIDAT PAR ID *****/
 	/*****************************************/
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Object> findCandidatById(
 			@PathVariable("id") int candidatId) {
@@ -90,7 +92,7 @@ public class CandidatController {
 		if(candidatId <= 0){close();return new ResponseEntity<Object>("PAS ID", HttpStatus.BAD_REQUEST);}
 		Candidat candidat = em.find(Candidat.class, candidatId);
 		close();
-		if(candidat == null){return new ResponseEntity<Object>("NOT FOUND", HttpStatus.NOT_FOUND);}
+		if(candidat == null){return new ResponseEntity<Object>("CANDIDAT ABSENT", HttpStatus.NOT_FOUND);}
 		return new ResponseEntity<Object>(candidat, HttpStatus.OK);
 	}
 
@@ -104,7 +106,7 @@ public class CandidatController {
 		Query query = em.createQuery("select c from Candidat c");
 		List<Candidat> candidats = query.getResultList();
 		close();
-		if(candidats.size() == 0){return new ResponseEntity<Object>("NOT FOUND", HttpStatus.NOT_FOUND);}
+		if(candidats.size() == 0){return new ResponseEntity<Object>("TABLE VIDE", HttpStatus.NOT_FOUND);}
 		return new ResponseEntity<Object>(candidats, HttpStatus.OK);
 	}
 
@@ -138,7 +140,7 @@ public class CandidatController {
 		}
 		close();
 		sendMail(candidat.getEmail(), password);
-		return new ResponseEntity<Object>("OK", HttpStatus.CREATED);
+		return new ResponseEntity<Object>("CANDIDAT CREE", HttpStatus.CREATED);
 	}
 	
 	/****************************************/

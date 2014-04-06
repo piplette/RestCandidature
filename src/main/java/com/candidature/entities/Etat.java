@@ -3,16 +3,18 @@ package com.candidature.entities;
 import java.io.Serializable;
 import java.lang.String;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * Entity implementation class for Entity: Etat
  *
  */
 @Entity
-public class Etat implements Serializable {
+public class Etat implements Serializable{
 	   
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,7 @@ public class Etat implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@OneToMany(mappedBy="etat") 
-	private Collection<Candidature> candidatures = new ArrayList<Candidature>();
+	private List<Candidature> candidatures = new ArrayList<Candidature>();
 	
 	public Etat() {
 		super();
@@ -45,11 +47,12 @@ public class Etat implements Serializable {
 		this.nom = nom;
 	}
 	
-	public Collection<Candidature> getCandidatures() {
+	@JsonIgnore
+	public List<Candidature> getCandidatures() {
 		return candidatures;
 	}
 	
-	public void setCandidatures(Collection<Candidature> candidatures) {
+	public void setCandidatures(List<Candidature> candidatures) {
 		this.candidatures = candidatures;
 	}
 }

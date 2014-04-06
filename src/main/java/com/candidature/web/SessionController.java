@@ -48,7 +48,7 @@ public class SessionController {
 		if(sessionId <= 0){close();return new ResponseEntity<Object>("PAS ID", HttpStatus.BAD_REQUEST);}
 		Session session = em.find(Session.class, sessionId);
 		close();
-		if(session== null){return new ResponseEntity<Object>("NOT FOUND", HttpStatus.NOT_FOUND);}
+		if(session== null){return new ResponseEntity<Object>("SESSION ABSENTE", HttpStatus.NOT_FOUND);}
 		return new ResponseEntity<Object>(session, HttpStatus.OK);
 	}
 
@@ -62,7 +62,7 @@ public class SessionController {
 		Query query = em.createQuery("select s from Session s");
 		List<Session> sessions = query.getResultList();
 		close();
-		if(sessions.size() == 0){return new ResponseEntity<Object>("AUCUNE SESSION", HttpStatus.NOT_FOUND);}
+		if(sessions.size() == 0){return new ResponseEntity<Object>("TABLE VIDE", HttpStatus.NOT_FOUND);}
 		return new ResponseEntity<Object>(sessions, HttpStatus.OK);
 	}
 
@@ -86,7 +86,7 @@ public class SessionController {
 			return new ResponseEntity<Object>("Doublon", HttpStatus.CONFLICT);
 		}
 		close();
-		return new ResponseEntity<Object>("OK", HttpStatus.CREATED);
+		return new ResponseEntity<Object>("SESSION CREE", HttpStatus.CREATED);
 	}
 	
 	/****************************************/

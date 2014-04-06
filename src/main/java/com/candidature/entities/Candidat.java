@@ -5,12 +5,14 @@ import java.lang.String;
 
 import javax.persistence.*;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * Entity implementation class for Entity: Candidat
  *
  */
 @Entity
-public class Candidat implements Serializable {
+public class Candidat implements Serializable{
 	   
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,6 +113,7 @@ public class Candidat implements Serializable {
 		this.situationFamiliale = situationFamiliale;
 	}
 	
+	@JsonIgnore
 	public Candidature getCandidature() {
 		return candidature;
 	}
